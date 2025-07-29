@@ -1,0 +1,59 @@
+id: https://stroemphi.github.io/dcat-4C-ap/dcat_4c_ap_ms
+name: ms
+
+classes:
+  MSAnalysisDataset:
+    is_a: AnalysisDataset
+    class_uri: dcat:Dataset
+    description: A dataset that is the result of a MSAnalysis of a ChemicalSample.
+    slot_usage:
+      was_generated_by:
+        range: MSAnalysis
+        multivalued: true
+        inlined_as_list: true
+      is_about_entity:
+        range: ChemicalSample
+    comments:
+      - Initial implementation of a domain-specific schema profile for a mass spectrometry dataset.
+
+  MSAnalysis:
+    is_a: DataAnalysis
+    class_uri: CHMO:0000470 # Beispiel: Mass spectrometry analysis aus CHMO
+    description: A DataAnalysis which identifies and/or quantifies molecules in a mass spectrum.
+    slot_usage:
+      evaluated_entity:
+        range: MSSpectrum
+    comments:
+      - Initial implementation of a domain-specific schema profile of a mass spectrometry analysis.
+
+  MSSpectroscopy:
+    is_a: DataGeneratingActivity
+    #class_uri: CHMO:0000613
+    description: Spectroscopy where the energy states of spin-active nuclei placed in a static magnetic field are interrogated by inducing transitions between the states via radio frequency irradiation. Each experiment consists of a sequence of radio frequency pulses with delay periods in between them.
+    slot_usage:
+      evaluated_entity:
+        range: ChemicalSample
+      rdf_type:
+        description: The type of NMR Spectroscopy provided as CURIE of a subclass of CHMO:0000613.
+        ## new binding feature is not yet implemented, see: https://github.com/linkml/linkml-model/releases/tag/v1.8.0
+        ## current workaround: using NMRAssayEnum as range
+        bindings:
+          - binds_value_of: id
+            range: NMRAssayEnum
+            obligation_level: RECOMMENDED
+            description: NMR types from the Chemical Methods Ontology
+    comments:
+      - This class serves as an example for the way in which we want to build domain specific schema profiles. It will be outsourced to a more appropriate location in the future.
+
+  MSSpectrum:
+    is_a: AnalysisSourceData
+    class_uri: NMR:1002007
+    description: A set of chemical shifts obtained via NMR spectroscopy.
+    slot_usage:
+      was_generated_by:
+        range: NMRSpectroscopy
+        multivalued: true
+        inlined_as_list: true
+    comments:
+      - This class serves as an example for the way in which we want to build domain specific schema profiles. It will be outsourced to a more appropriate location in the future.
+
