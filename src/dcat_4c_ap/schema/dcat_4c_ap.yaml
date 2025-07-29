@@ -47,6 +47,7 @@ default_range: string
 imports:
   - linkml:types
   - dcat_ap_plus
+  - ms
 
 classes:
 
